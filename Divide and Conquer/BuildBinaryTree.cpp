@@ -1,4 +1,3 @@
-#include <iostream>
 #include <unordered_map>
 #include <vector>
 
@@ -24,6 +23,11 @@ struct TreeNode {
 - 将当前树在 inorder 中的索引区间记为 [l, r], 其中 l 为区间左端点，r 为区间右端点
 
 注意: 右子树根节点索引中的 (m - l) 的含义是"左子树的节点数量"
+
+1. 查找根节点在 inorder 中的索引
+2. 利用该索引可将 inorder 划分为 [ 左子树 | 根节点 ｜ 右子树 ]
+3. 根据 inorder 的划分结果，易得左子树和右子树的节点数量，从而可将 preorder 划分为 [ 根节点 | 左子树 | 右子树 ]
+4. 递归构建左子树和右子树
 */
 
 TreeNode *dfs(vector<int> &preorder, unordered_map<int, int> &inorderMap, int i, int l, int r) {
