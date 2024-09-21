@@ -46,6 +46,7 @@ void backtrack(State *state, vector<Choice *> &choices, vector<State *> &res) {
 */
 
 /* 判断当前状态是否为解 */
+// 条件: 当前状态不为空, 且最后一个节点的值为 2
 bool isSolution(vector<TreeNode *> &state) {
     return !state.empty() && state.back()->val == 2;
 }
@@ -56,6 +57,7 @@ void recordSolution(vector<TreeNode *> &state, vector<vector<TreeNode *>> &res) 
 }
 
 /* 判断在当前状态下，该选择是否合法 */
+// 条件: 选择不为空, 且选择的节点的值不为 3
 bool isValid(vector<TreeNode *> &state, TreeNode *choice) {
     return choice != nullptr && choice->val != 3;
 }
