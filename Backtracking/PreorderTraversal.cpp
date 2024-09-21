@@ -21,8 +21,9 @@ void preOrderFindN(TreeNode *root, int n ,vector<TreeNode*> &res){
     if(root == nullptr)
         return;
     if(root->val == n){
-        res.push_back(root);//
+        res.push_back(root);// 将当前节点加入结果列表
     }
+    // 递归左右子树
     preOrderFindN(root->left, n, res);
     preOrderFindN(root->right, n, res);
     return;
