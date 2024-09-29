@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 /*
 (未解决)
 题目描述：
@@ -39,47 +40,54 @@ using namespace std;
 ```
 */
 
-int n, m, q;
-vector<int> row;
-vector<int> shift;
+long n, m, q;
+vector<vector<int>> matrix;
 
-void doFunc1(int x, int y){
+void doFunc1(long x, long y){
     x--;
     y--;
-    swap(row[x], row[y]);
+    swap(matrix[x], matrix[y]);
 }
 
-void doFunc2(int x, int y){
+void doFunc2(long x, long y){
     x--;
-    shift[x] = (shift[x] + y) % m;
+    y = y % m;
+    vector<int> temp_row(m);
+    for(int i = 0; i < m; i++){
+        temp_row[i] = matrix[x][(i+y)%m];
+    }
+    matrix[x] = temp_row;
 }
 
-void doFunc3(int x, int y){
+void doFunc3(long x, long y){
     x--;
-    y--;
-    int real_row = row[x];
-    int real_col = (y + shift[x]) % m;
-    int res = real_row * m + real_col + 1;
-    cout << res << endl;
+    y--;    
+    cout << matrix[x][y] << endl;
 }
 
 int main(){
     // n 行, m 列, q 次调整
     cin >> n >> m >> q;
-    row.resize(n);
-    shift.resize(n,0);
-    for (int i=0; i < n; i++) {
-        row[i] = i;
+    matrix.resize(n, vector<int>(m));
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            matrix[i][j] = i*m + j + 1;
+        }
     }
+    
     for(int i = 0; i < q; i++){
-        int t, x, y;
+        long t, x, y;
         cin >> t >> x >> y;
-        if (t == 1){
-            doFunc1(x, y);
-        } else if (t == 2){
-            doFunc2(x, y);
-        } else if (t == 3){
-            doFunc3(x, y);        
+        switch (t) {
+            case 1:
+                doFunc1(x, y);
+                break;
+            case 2:                
+                doFunc2(x, y);
+                break;
+            case 3:
+                doFunc3(x, y);
+                break;
         }
     }
     return 0;

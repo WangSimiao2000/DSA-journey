@@ -17,42 +17,51 @@ using namespace std;
 输出一个整数，表示最大利润。
 */
 
+struct Item {
+    long long profit;
+    int limit;
+};
+
+bool cmp(const Item& a, const Item& b) {
+    return a.profit > b.profit;
+}
+
 int main() {
-    int n, k;
+    int n;
+    long long k;
     cin >> n >> k;
     // 成本
-    vector<int> cost(n+1, 0);
-    for(int i = 1; i <= n; i++) {
+    vector<int> cost(n, 0);
+    for (int i = 0; i < n; i++) {
         cin >> cost[i];
     }
     // 价格
     vector<int> price(n, 0);
-    for(int i = 1; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
         cin >> price[i];
     }
     // 售卖数量限制
-    vector<int> limit(n, 0);
-    for(int i = 1; i <= n; i++) {
-        cin >> limit[i];
-    }
-    
-    // dp[i] 表示前i个商品的最大利润
-    vector<int> dp(k+1, 0);
-    for(int i = 1; i <= n; i++) {
-        int profit = price[i] - cost[i];
-        if (profit <= 0) {
-            continue;        
-        }
-        // 剩余的商品数量
-        int remain = limit[i];
-        for(int j = 1; remain > 0; j = min(j,remain)){
-            remain -= j;
-            for(int l = k; l >= j; l--){
-                dp[l] = max(dp[l], dp[l-j] + j * profit);
-            }
-            j *= 2;
+    vector<Item> items(n);
+    for (int i = 0; i < n; i++) {
+        cin >> items[i].limit;
+        items[i].profit = price[i] - cost[i];
+        if (items[i].profit < 0) {
+            items[i].limit = 0;
         }
     }
-    cout << dp[k] << endl;    
+    sort(items.begin(), items.end(), cmp); // 按照利润降序排序
+
+    long long maxProfit = 0;
+    for (int i = 0; i < n && k > 0; i++) {
+        if(items[i].limit > 0){
+            int sellQuantity = min((int)k, items[i].limit);
+            maxProfit += sellQuantity * items[i].profit;
+            k -= sellQuantity;
+            items[i].limit -= sellQuantity;
+        }
+    }
+
+    cout << maxProfit << endl;
+
     return 0;
 }
