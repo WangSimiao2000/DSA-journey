@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
         "subarray"
-    ]
+    ],
+    "editor.detectIndentation": false,
+    "C_Cpp.clang_format_style": "Visual Studio"
 }
