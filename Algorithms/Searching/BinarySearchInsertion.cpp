@@ -1,4 +1,3 @@
-#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -47,10 +46,4 @@ int binarySearchInsertion(vector<int> &nums, int target) {
   }
   // 返回插入点 i
   return i;
-}
-
-int main() {
-  vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-  cout << binarySearchInsertionSimple(nums, 5) << endl; // 4
-  return 0;
 }
